@@ -1,0 +1,16 @@
+CREATE TABLE public.profiles (id uuid PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE, display_name text NOT NULL DEFAULT 'Learner', created_at timestamptz NOT NULL DEFAULT now());
+GRANT SELECT, INSERT, UPDATE ON public.profiles TO authenticated;
+GRANT ALL ON public.profiles TO service_role;
+ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Own profile read" ON public.profiles FOR SELECT TO authenticated USING (auth.uid() = id);
+CREATE POLICY "Own profile insert" ON public.profiles FOR INSERT TO authenticated WITH CHECK (auth.uid() = id);
+CREATE POLICY "Own profile update" ON public.profiles FOR UPDATE TO authenticated USING (auth.uid() = id) WITH CHECK (auth.uid() = id);
+CREATE FUNCTION public.create_learner_profile() RETURNS trigger LANGUAGE plpgsql SECURITY DEFINER SET search_path = public AS $$ BEGIN INSERT INTO public.profiles(id, display_name) VALUES (NEW.id, coalesce(nullif(NEW.raw_user_meta_data->>'display_name',''), 'Learner')); RETURN NEW; END; $$;
+CREATE TRIGGER academy_profile_signup AFTER INSERT ON auth.users FOR EACH ROW EXECUTE FUNCTION public.create_learner_profile();
+CREATE TABLE public.learning_progress (user_id uuid NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE, course_id text NOT NULL, lesson_id text NOT NULL, step integer NOT NULL DEFAULT 0 CHECK (step BETWEEN 0 AND 5), updated_at timestamptz NOT NULL DEFAULT now(), PRIMARY KEY (user_id, course_id, lesson_id));
+GRANT SELECT, INSERT, UPDATE ON public.learning_progress TO authenticated;
+GRANT ALL ON public.learning_progress TO service_role;
+ALTER TABLE public.learning_progress ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Own progress read" ON public.learning_progress FOR SELECT TO authenticated USING (auth.uid() = user_id);
+CREATE POLICY "Own progress insert" ON public.learning_progress FOR INSERT TO authenticated WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "Own progress update" ON public.learning_progress FOR UPDATE TO authenticated USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
