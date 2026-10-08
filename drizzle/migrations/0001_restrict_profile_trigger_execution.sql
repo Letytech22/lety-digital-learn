@@ -1,0 +1,1 @@
+REVOKE EXECUTE ON FUNCTION public.create_learner_profile() FROM PUBLIC, anon, authenticated;

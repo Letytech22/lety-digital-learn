@@ -173,6 +173,6 @@ details summary::-webkit-details-marker { display: none; }
 details[open] .faq-plus { transform: rotate(45deg); }
 @media (max-width: 640px) {
   .page-width { width: calc(100% - 36px); }
-  .hero-shade { background: linear-gradient(180deg, var(--background) 0%, var(--background) 46%, color-mix(in oklch, var(--background) 60%, transparent) 66%, transparent 85%); }
+  .hero-shade { background: linear-gradient(180deg, var(--background) 0%, var(--background) 52%, color-mix(in oklch, var(--background) 95%, transparent) 64%, transparent 82%); }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
