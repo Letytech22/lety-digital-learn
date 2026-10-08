@@ -17,7 +17,7 @@ export function LearningProvider({children}:{children:ReactNode}) {
    const [profile,rows]=await Promise.all([supabase.from('profiles').select('display_name').eq('id',id).maybeSingle(),supabase.from('learning_progress').select('course_id,lesson_id,step,updated_at').eq('user_id',id)]);
    if (!active || identity!==id) return;
    if(profile.error || rows.error) toast.error('Your progress could not be loaded. Please refresh to try again.');
-   setName(profile.data?.display_name ?? next.user_metadata?.display_name ?? 'Learner'); setProgress(rows.data ?? []); setLoading(false);
+   setName(profile.data?.display_name ?? next.user_metadata?.['display_name'] ?? 'Learner'); setProgress(rows.data ?? []); setLoading(false);
   }
   supabase.auth.getUser().then(({data})=>{if(active) void load(data.user)});
   const {data:{subscription}}=supabase.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_IN'||event==='SIGNED_OUT'||event==='USER_UPDATED') setTimeout(()=>{if(active) void load(session?.user??null)},0)});

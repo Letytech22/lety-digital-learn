@@ -28,7 +28,7 @@ export const courses = [
     { title: 'Bringing Ideas to Life', lessons: ['Transitions and animations', 'Speaker notes', 'Practice your slideshow'] },
     { title: 'Presenting with Confidence', lessons: ['Plan a short presentation', 'Present and navigate slides', 'Export and share slides'] },
   ] },
-];
+] as const;
 export type Course = typeof courses[number];
 export function lessonsFor(course: Course) { return course.modules.flatMap((m, mi) => m.lessons.map((title, li) => ({ id: `${mi}-${li}`, title, module: m.title }))); }
 export function pageHead(title: string, description: string) { return { meta: [{ title: `${title} — Lety Digital Academy` }, { name: 'description', content: description }, { property: 'og:title', content: `${title} — Lety Digital Academy` }, { property: 'og:description', content: description }, { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary_large_image' }] }; }
