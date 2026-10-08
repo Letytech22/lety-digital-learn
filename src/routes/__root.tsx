@@ -12,6 +12,9 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { AcademyShell } from '@/components/academy-shell';
+import { LearningProvider } from '@/components/learning-provider';
+import { Toaster } from 'sonner';
 
 function NotFoundComponent() {
   return (
@@ -78,21 +81,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Lety Digital Academy" },
+      { name: "description", content: "Learn Digital Skills. Practice Anywhere." },
+      { name: "author", content: "Lety Tech Consultancy" },
+      { property: "og:title", content: "Lety Digital Academy" },
+      { property: "og:description", content: "Learn Digital Skills. Practice Anywhere." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap' },
     ],
   }),
   shellComponent: RootShell,
@@ -120,8 +123,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <LearningProvider><AcademyShell><Outlet /></AcademyShell><Toaster position="top-center" richColors /></LearningProvider>
     </QueryClientProvider>
   );
 }
