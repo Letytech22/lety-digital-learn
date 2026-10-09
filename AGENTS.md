@@ -13,4 +13,5 @@
 - Keep public academy pages in TanStack file routes and share header/bottom navigation in one shell, so all screens have consistent navigation.
 - Define curriculum and lesson IDs in one browser-safe catalog module, so outlines, completion calculations and resume behavior use the same source.
 - Store profiles and per-lesson learning steps in Lovable Cloud with owner-only RLS, so progress is private and survives across devices.
-- Phase 1 learning content is an introductory scaffold; do not imply virtual labs, videos or certificate issuance are available before those phases ship.
+- Lesson content is an introductory scaffold; only claim features that exist (the Virtual Computer Lab ships; videos, simulators beyond the lab and certificates do not yet).
+- Virtual Lab exercises check completion from real pointer interactions and save completion as learning_progress rows under the lab course ID, so no extra table is needed.

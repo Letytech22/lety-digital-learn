@@ -176,3 +176,10 @@ details[open] .faq-plus { transform: rotate(45deg); }
   .hero-shade { background: linear-gradient(180deg, var(--background) 0%, var(--background) 52%, color-mix(in oklch, var(--background) 95%, transparent) 64%, transparent 82%); }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
+
+.lab-desktop {
+  background: linear-gradient(150deg, color-mix(in oklab, var(--primary) 85%, var(--foreground)), color-mix(in oklab, var(--primary) 55%, var(--foreground)));
+}
+.lab-show-me { animation: lab-pulse 1.1s ease-in-out infinite; box-shadow: 0 0 0 3px var(--warm, var(--ring)); }
+@keyframes lab-pulse { 50% { box-shadow: 0 0 0 7px color-mix(in oklab, var(--ring) 40%, transparent); } }
+@media (prefers-reduced-motion: reduce) { .lab-show-me { animation: none; } }
